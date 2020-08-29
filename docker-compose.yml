@@ -1,0 +1,19 @@
+version: '2'
+services:
+  mysql_db:
+    image: mysql:latest
+    volumes:
+      #      Монтируем внешнюю папку для хранения данных
+      - ./.mysql-data/db:/var/lib/mysql
+      #      Инициализация БД из дампа из папки ./sqlinit при старте
+      - ./sqlinit:/docker-entrypoint-initdb.d
+#   Рестартим после перезгрузки
+#    restart: always
+#       Проброс "на ружу" порта 3306 (В нашем случае это лишнее, т.к. все взаимодействие осуществляется на порту 8080)
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: 12345678
+      MYSQL_DATABASE: chat_auth
+      MYSQL_USER: user
+      MYSQL_PASSWORD: 12345678

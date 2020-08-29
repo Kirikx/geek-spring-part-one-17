@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- EXAMPLE2 -->
+    <context:component-scan base-package="ru.geekbrains.server"/>
+
+    <!-- EXAMPLE1 (Моветон) -->
+    <!-- bean - это экземпляр класса управляемый spring -->
+    <!-- bean definitions here -->
+
+<!--    <bean id="chatServer" class="ru.geekbrains.server.ChatServer">-->
+<!--        <constructor-arg ref="authService"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="authService" class="ru.geekbrains.server.auth.AuthServiceJdbcImpl">-->
+<!--        <constructor-arg ref="userRepository"/>-->
+<!--    </bean>-->
+
+<!--    <bean id="userRepository" class="ru.geekbrains.server.persistance.UserRepository">-->
+<!--        <constructor-arg ref="dataSource"/>-->
+<!--    </bean>-->
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+        <property name="username" value="root"/>
+        <property name="password" value="12345678"/>
+        <property name="url"
+                  value="jdbc:mysql://localhost:3306/chat_auth?&amp;useUnicode=true&amp;useJDBCCompliantTimezoneShift=true&amp;useLegacyDatetimeCode=false&amp;serverTimezone=UTC"/>
+    </bean>
+
+    <!--    взять приложение и часть приложения переписать, используя все 3 вида конфигурации-->
+
+</beans>

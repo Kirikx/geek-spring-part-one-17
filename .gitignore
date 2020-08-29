@@ -1,0 +1,3 @@
+# Project exclude paths
+/lesson-1-network-chat/target/
+/lesson-2-spring-mvc/target/
