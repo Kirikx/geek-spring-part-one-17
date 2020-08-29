@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.geekbrains.persistance.Product;
 import ru.geekbrains.persistance.User;
 import ru.geekbrains.persistance.UserRepository;
 
@@ -27,6 +28,13 @@ public class UserController {
         return "users";
     }
 
+    @GetMapping("/create")
+    public String createUser(Model model) throws SQLException {
+        User user = new User(-1, "", "");
+        model.addAttribute("user", user);
+        return "user";
+    }
+
     @GetMapping("/{id}")
     public String editUser(@PathVariable("id") Long id, Model model) throws SQLException {
         User user = userRepository.findById(id);
@@ -36,7 +44,16 @@ public class UserController {
 
     @PostMapping("/update")
     public String updateUser(User user) throws SQLException {
+        if (user.getId()==-1){
+            userRepository.insert(user);
+        }
         userRepository.update(user);
+        return "redirect:/user";
+    }
+
+    @GetMapping("/{id}/delete")
+    public String deleteUser(@PathVariable("id") Long id) throws SQLException {
+        userRepository.deleteById(id);
         return "redirect:/user";
     }
 }
