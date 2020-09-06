@@ -91,4 +91,12 @@ public class UserRepository {
         }
     }
 
+    public void deleteById(Long id) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(
+                "delete from users where id = ?")) {
+            stmt.setLong(1, id);
+            stmt.execute();
+        }
+    }
+
 }

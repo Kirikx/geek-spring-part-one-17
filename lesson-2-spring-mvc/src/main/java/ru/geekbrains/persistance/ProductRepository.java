@@ -90,4 +90,12 @@ public class ProductRepository {
         }
     }
 
+    public void deleteById(Long id) throws SQLException {
+        try (PreparedStatement stmt = conn.prepareStatement(
+                "delete from product where id = ?")) {
+            stmt.setLong(1, id);
+            stmt.execute();
+        }
+    }
+
 }
