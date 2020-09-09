@@ -13,7 +13,7 @@ public class Order {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
@@ -37,7 +37,7 @@ public class Order {
     public Order() {
     }
 
-    public Order(int id, Product product, BigDecimal cost, User user, Date datetimeOrder) {
+    public Order(Integer id, Product product, BigDecimal cost, User user, Date datetimeOrder) {
         this.id = id;
         this.product = product;
         this.cost = cost;
@@ -45,11 +45,11 @@ public class Order {
         this.datetimeOrder = datetimeOrder;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

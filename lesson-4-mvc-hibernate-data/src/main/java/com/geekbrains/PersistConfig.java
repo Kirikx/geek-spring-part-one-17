@@ -1,10 +1,10 @@
 package com.geekbrains;
 
-import com.geekbrains.persist.repo.UserRepository;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -16,6 +16,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:application.properties")
+@EnableJpaRepositories("com.geekbrains.persist.repo")
 public class PersistConfig {
 
     @Value("${database.driver.class}")
@@ -29,11 +30,6 @@ public class PersistConfig {
 
     @Value("${database.password}")
     private String password;
-
-    @Bean
-    public UserRepository userRepository() {
-        return new UserRepository();
-    }
 
     @Bean
     public DataSource dataSource() {

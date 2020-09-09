@@ -6,7 +6,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import java.sql.SQLException;
 import java.util.List;
 
 @Repository
@@ -39,11 +38,11 @@ public class ProductRepository {
                 .getSingleResult();
     }
 
-    public Product findById(Long id) throws SQLException {
+    public Product findById(Long id)   {
         return em.find(Product.class, id);
     }
 
-    public List<Product> getAllProducts() throws SQLException {
+    public List<Product> getAllProducts()   {
         return em.createQuery("from Product", Product.class).getResultList();
     }
 
