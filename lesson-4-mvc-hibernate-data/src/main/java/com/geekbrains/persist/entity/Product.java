@@ -1,7 +1,5 @@
 package com.geekbrains.persist.entity;
 
-import org.springframework.format.annotation.NumberFormat;
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.List;
@@ -18,11 +16,11 @@ public class Product {
     @Column(name = "title", length = 128)
     private String title;
 
-    @Column(name = "cost")
+    @Column(name = "prise")
     private BigDecimal prise;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Order> orders;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
 
     public Product() {
     }
@@ -57,12 +55,12 @@ public class Product {
         this.prise = prise;
     }
 
-    public List<Order> getOrders() {
-        return orders;
+    public List<OrderItem> getOrders() {
+        return orderItems;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setOrders(List<OrderItem> orderItems) {
+        this.orderItems = orderItems;
     }
 
     @Override
@@ -71,7 +69,7 @@ public class Product {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", cost=" + prise +
-                ", orders=" + orders +
+                ", orderItems=" + orderItems +
                 '}';
     }
 }

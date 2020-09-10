@@ -8,8 +8,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
-@Table(name = "orders")
-public class Order {
+@Table(name = "orderItems")
+public class OrderItem {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -34,10 +34,10 @@ public class Order {
     @Column
     private Integer count;
 
-    public Order() {
+    public OrderItem() {
     }
 
-    public Order(Integer id, Product product, BigDecimal cost, User user, Date datetimeOrder) {
+    public OrderItem(Integer id, Product product, BigDecimal cost, User user, Date datetimeOrder) {
         this.id = id;
         this.product = product;
         this.cost = cost;

@@ -18,16 +18,16 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Order> orders;
+    private List<Order> orderItems;
 
     public User(){
     }
 
-    public User(Integer id, String login, String password, List<Order> orders) {
+    public User(Integer id, String login, String password, List<Order> orderItems) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.orders = orders;
+        this.orderItems = orderItems;
     }
 
     public Integer getId() {
@@ -55,11 +55,11 @@ public class User {
     }
 
     public List<Order> getOrders() {
-        return orders;
+        return orderItems;
     }
 
-    public void setOrders(List<Order> orders) {
-        this.orders = orders;
+    public void setOrders(List<Order> orderItems) {
+        this.orderItems = orderItems;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class User {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", orders=" + orders +
+                ", orderItems=" + orderItems +
                 '}';
     }
 }

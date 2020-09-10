@@ -1,49 +1,27 @@
 package com.geekbrains.persist.repo;
 
 import com.geekbrains.persist.entity.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Repository
-public class ProductRepository {
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 
-    @PersistenceContext
-    private EntityManager em;
+    List<Product> findByTitleLike(String titlePattern);
 
-    @Transactional
-    public void insert(Product product) {
-        em.persist(product);
-    }
+    List<Product> findByPriseGreaterThanEqual(BigDecimal minCost);
 
-    @Transactional
-    public void update(Product product) {
-        em.merge(product);
-    }
+    List<Product> findByPriseGreaterThanEqualAndPriseLessThanEqual(BigDecimal minCost, BigDecimal maxCost);
 
-    @Transactional
-    public void delete(Long id) {
-        Product product = em.find(Product.class, id);
-        if (product != null) {
-            em.remove(product);
-        }
-    }
+    List<Product> findByPriseLessThanEqual(BigDecimal maxCost);
 
-    public Product findByTitle(String title) {
-        return em.createQuery("from Product where title = :title", Product.class)
-                .setParameter("title", title)
-                .getSingleResult();
-    }
+    List<Product> findByTitleLikeAndPriseGreaterThanEqualAndPriseLessThanEqual(String title, BigDecimal minCost, BigDecimal maxCost);
 
-    public Product findById(Long id)   {
-        return em.find(Product.class, id);
-    }
+    List<Product> findByTitleLikeAndPriseGreaterThanEqual(String title, BigDecimal minCost);
 
-    public List<Product> getAllProducts()   {
-        return em.createQuery("from Product", Product.class).getResultList();
-    }
+    List<Product> findByTitleLikeAndPriseLessThanEqual(String title, BigDecimal maxCost);
 
 }
