@@ -26,8 +26,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="user">User list</a>
-                <a class="nav-link" href="product">Product list</a>
+                <a class="nav-link" href="/mvc-app/user">User list</a>
+                <a class="nav-link" href="/mvc-app/product">Product list</a>
             </li>
         </ul>
     </div>
@@ -41,10 +41,23 @@
                 <div class="form-group">
                     <label>Login</label>
                     <input type="text" class="form-control" th:field="*{login}" placeholder="Enter login">
+                    <small id="loginError" class="form-text text-error"
+                           th:if="${#fields.hasErrors('login')}" th:errors="*{login}">Validation error</small>
+                </div>
+                <div class="form-group">
+                    <label>Email</label>
+                    <input type="email" class="form-control" th:field="*{email}" placeholder="Enter email" required>
                 </div>
                 <div class="form-group">
                     <label>Password</label>
-                    <input type="password" class="form-control" th:field="*{password}" placeholder="Enter password">
+                    <input type="password" class="form-control" th:field="*{password}" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label>Matching password</label>
+                    <input type="password" class="form-control" th:field="*{matchingPassword}" placeholder="Repeat password" required>
+                    <small id="passwordError" class="form-text text-error"
+                           th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}">Validation error</small>
+
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

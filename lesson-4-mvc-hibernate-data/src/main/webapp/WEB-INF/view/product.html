@@ -26,8 +26,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item active">
-                <a class="nav-link" href="user">User list</a>
-                <a class="nav-link" href="product">Product list</a>
+                <a class="nav-link" href="/mvc-app/user">User list</a>
+                <a class="nav-link" href="/mvc-app/product">Product list</a>
             </li>
         </ul>
     </div>
@@ -40,11 +40,11 @@
                 <input th:type="hidden" th:field="*{id}">
                 <div class="form-group">
                     <label>Title</label>
-                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title">
+                    <input type="text" class="form-control" th:field="*{title}" placeholder="Enter title" required>
                 </div>
                 <div class="form-group">
                     <label>Prise</label>
-                    <input type="number" class="form-control" th:field="*{prise}" placeholder="Enter title">
+                    <input type="number" class="form-control" th:field="*{prise}" placeholder="Enter title" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
