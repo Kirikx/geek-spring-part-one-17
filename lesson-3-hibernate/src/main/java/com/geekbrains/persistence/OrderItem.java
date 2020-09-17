@@ -8,7 +8,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "orderItems")
-public class Order {
+public class OrderItem {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,10 +30,10 @@ public class Order {
     @Column(name = "datetime_order")
     private Date datetimeOrder;
 
-    public Order() {
+    public OrderItem() {
     }
 
-    public Order(int id, Product product, Long cost, User user, Date datetimeOrder) {
+    public OrderItem(int id, Product product, Long cost, User user, Date datetimeOrder) {
         this.id = id;
         this.product = product;
         this.cost = cost;
@@ -75,11 +75,11 @@ public class Order {
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "OrderItem{" +
                 "id=" + id +
-                ", product_id=" + product.getId() +
+                ", product=" + product +
                 ", cost=" + cost +
-                ", user_id=" + user.getId() +
+                ", user=" + user +
                 ", datetimeOrder=" + datetimeOrder +
                 '}';
     }
