@@ -134,8 +134,8 @@ public class Main {
         System.out.println(order);
 
         System.out.println("ORDERS");
-        List<Order> orders = em.createQuery("from Order", Order.class).getResultList();
-        System.out.println(orders);
+        List<Order> orderItems = em.createQuery("from Order", Order.class).getResultList();
+        System.out.println(orderItems);
 
         em.getTransaction().commit();
 

@@ -1,6 +1,7 @@
-package com.geekbrains.persistence;
+package com.geekbrains.persist.entity;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.List;
 
 @Entity
@@ -10,31 +11,31 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
-    @Column(name = "title")
+    @Column(name = "title", length = 128)
     private String title;
 
-    @Column(name = "cost")
-    private Long cost;
+    @Column(name = "prise")
+    private BigDecimal prise;
 
-    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Order> orderItems;
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<OrderItem> orderItems;
 
     public Product() {
     }
 
-    public Product(int id, String title, Long cost) {
+    public Product(Integer id, String title, BigDecimal prise) {
         this.id = id;
         this.title = title;
-        this.cost = cost;
+        this.prise = prise;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,19 +47,19 @@ public class Product {
         this.title = title;
     }
 
-    public Long getCost() {
-        return cost;
+    public BigDecimal getPrise() {
+        return prise;
     }
 
-    public void setCost(Long cost) {
-        this.cost = cost;
+    public void setPrise(BigDecimal prise) {
+        this.prise = prise;
     }
 
-    public List<Order> getOrders() {
+    public List<OrderItem> getOrders() {
         return orderItems;
     }
 
-    public void setOrders(List<Order> orderItems) {
+    public void setOrders(List<OrderItem> orderItems) {
         this.orderItems = orderItems;
     }
 
@@ -67,7 +68,7 @@ public class Product {
         return "Product{" +
                 "id=" + id +
                 ", title='" + title + '\'' +
-                ", cost=" + cost +
+                ", cost=" + prise +
                 ", orderItems=" + orderItems +
                 '}';
     }

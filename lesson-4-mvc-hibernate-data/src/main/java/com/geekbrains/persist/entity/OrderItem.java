@@ -1,26 +1,27 @@
-package com.geekbrains.persistence;
+package com.geekbrains.persist.entity;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "orderItems")
-public class Order {
+public class OrderItem {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Product product;
 
     @Column(name = "cost")
-    private Long cost;
+    private BigDecimal cost;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
@@ -30,10 +31,13 @@ public class Order {
     @Column(name = "datetime_order")
     private Date datetimeOrder;
 
-    public Order() {
+    @Column
+    private Integer count;
+
+    public OrderItem() {
     }
 
-    public Order(int id, Product product, Long cost, User user, Date datetimeOrder) {
+    public OrderItem(Integer id, Product product, BigDecimal cost, User user, Date datetimeOrder) {
         this.id = id;
         this.product = product;
         this.cost = cost;
@@ -41,11 +45,11 @@ public class Order {
         this.datetimeOrder = datetimeOrder;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -57,11 +61,11 @@ public class Order {
         this.product = product;
     }
 
-    public Long getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(Long cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 

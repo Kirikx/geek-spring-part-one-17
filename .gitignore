@@ -3,3 +3,4 @@
 /lesson-2-spring-mvc/target/
 /.idea
 *.iml
+/.mysql-data/
