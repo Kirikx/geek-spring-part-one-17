@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css"/>
+    <title>FrAzbuka OnLine</title>
+
+</head>
+
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <a class="navbar-brand" href="#">FruZbuka</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+            aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+        <ul class="navbar-nav">
+            <li class="nav-item active">
+                <a class="nav-link" href="#">Users <span class="sr-only">(current)</span></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="product">Products </a>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Repozitories
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    <a class="dropdown-item" href="#">User <span class="sr-only">(current)</span></a>
+                    <a class="dropdown-item" href="product">Product</a>
+                    <a class="dropdown-item" href="order">OrderItem</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>
+
+<div class="container">
+    <div class="row py-2">
+        <div class="col-12">
+            <a class="btn btn-primary" href="user/create">Add User</a>
+        </div>
+
+        <div class="col-12 mt-3">
+            <form>
+                <label>Find by login</label>
+                <input type="text" name="name" id="name" th:value="${param.name}"/>
+
+                <label>Email</label>
+                <input type="text" name="email" id="email" th:value="${param.email}"/>
+
+                <button class="btn btn-primary" type="submit">Filter</button>
+            </form>
+        </div>
+
+        <div class="col-12">
+            <table id="userTable" class="table table-hover table-bordered my-2">
+                <thead>
+                <tr>
+                    <th scope="col" style="width: 15%">
+                        <a th:href="@{user(page=${usersPage.number + 1}, size=${usersPage.size}, name=${name}, email=${email}, sortBy='id',  sortDirection=${sortReversDirection})}">
+                            Id
+                        </a>
+                    </th>
+                    <th scope="col" style="width: 35%">
+                        <a th:href="@{user(page=${usersPage.number + 1}, size=${usersPage.size}, name=${name}, email=${email}, sortBy='login',  sortDirection=${sortReversDirection})}">
+                            Login
+                        </a>
+                    </th>
+                    <th scope="col" style="width: 35%">
+                        <a th:href="@{user(page=${usersPage.number + 1}, size=${usersPage.size}, name=${name}, email=${email}, sortBy='email',  sortDirection=${sortReversDirection})}">
+                            Email
+                        </a>
+                    </th>
+                    <th scope="col" style="width: 15%">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="user : ${usersPage.content}">
+                    <th scope="row" th:text="${user.id}">1</th>
+                    <td th:text="${user.login}">User login</td>
+                    <td th:text="${user.email}">User email</td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/user/{id}(id = ${user.id})}"><i class="fas fa-edit"></i></a>
+                        <form class="d-inline" th:action="@{/user/{id}/delete(id = ${user.id})}" th:method="delete">
+                            <button type="submit" class="btn btn-danger"><i class="far fa-trash-alt"></i></button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-12 row justify-content-between">
+            <div class="ml-4">
+                <form class="pagination" th:action="@{/user}" th:object="${usersPage}" th:method="get">
+                    <select th:field="*{size}">
+                        <option th:each="size : ${pageSize}"
+                                th:value="${size}"
+                                th:selected="${size == usersPage.size} ? 'selected'"
+                                th:text="${size}">5
+                        </option>
+                    </select>
+                    <button class="btn btn-primary" type="submit">Ok</button>
+                </form>
+            </div>
+
+            <div class="ml-2">
+                <nav aria-label="...">
+                    <ul class="pagination">
+                        <li class="page-item"
+                            th:classappend=" ${usersPage.number == 0} ? 'disabled'">
+                            <a class="page-link"
+                               th:href="@{user(page=${usersPage.number}, size=${usersPage.size}, name=${name}, email=${email}, sortBy=${sortBy},  sortDirection=${sortDirection})}">Previous</a>
+                        </li>
+
+                        <li th:each="num: ${#numbers.sequence(1, usersPage.totalPages)}"
+                            class="page-item"
+                            th:classappend="${num == usersPage.number + 1} ? 'active'">
+                            <a class="page-link"
+                               th:text="${num}"
+                               th:href="@{user(page=${num}, size=${usersPage.size}, name=${name}, email=${email}, sortBy=${sortBy},  sortDirection=${sortDirection})}">1</a>
+                        </li>
+
+                        <li class="page-item"
+                            th:classappend=" ${(usersPage.number + 1) == usersPage.totalPages} ? 'disabled'">
+                            <a class="page-link"
+                               th:href="@{user(page=${usersPage.number + 2}, size=${usersPage.size}, name=${name}, email=${email}, sortBy=${sortBy},  sortDirection=${sortDirection})}">Next</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>
