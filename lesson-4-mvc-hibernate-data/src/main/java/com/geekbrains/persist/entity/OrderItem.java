@@ -11,8 +11,8 @@ import java.util.Date;
 @Table(name = "orderItems")
 public class OrderItem {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -24,25 +24,26 @@ public class OrderItem {
     private BigDecimal cost;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "order_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
-    private User user;
+    private Order order;
 
     @Column(name = "datetime_order")
     private Date datetimeOrder;
 
-    @Column
+    @Column(name = "count")
     private Integer count;
 
     public OrderItem() {
     }
 
-    public OrderItem(Integer id, Product product, BigDecimal cost, User user, Date datetimeOrder) {
+    public OrderItem(Integer id, Product product, BigDecimal cost, Order order, Date datetimeOrder, Integer count) {
         this.id = id;
         this.product = product;
         this.cost = cost;
-        this.user = user;
+        this.order = order;
         this.datetimeOrder = datetimeOrder;
+        this.count = count;
     }
 
     public Integer getId() {
@@ -69,22 +70,39 @@ public class OrderItem {
         this.cost = cost;
     }
 
-    public User getUser() {
-        return user;
+    public Order getOrder() {
+        return order;
     }
 
-    public void setUser(User user) {
-        this.user = user;
+    public void setOrder(Order order) {
+        this.order = order;
+    }
+
+    public Date getDatetimeOrder() {
+        return datetimeOrder;
+    }
+
+    public void setDatetimeOrder(Date datetimeOrder) {
+        this.datetimeOrder = datetimeOrder;
+    }
+
+    public Integer getCount() {
+        return count;
+    }
+
+    public void setCount(Integer count) {
+        this.count = count;
     }
 
     @Override
     public String toString() {
-        return "Order{" +
+        return "OrderItem{" +
                 "id=" + id +
-                ", product_id=" + product.getId() +
+                ", productId=" + product.getId() +
                 ", cost=" + cost +
-                ", user_id=" + user.getId() +
+                ", orderId=" + order.getId() +
                 ", datetimeOrder=" + datetimeOrder +
+                ", count=" + count +
                 '}';
     }
 }

@@ -19,7 +19,7 @@ public class Product {
     private Long cost;
 
     @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Order> orderItems;
+    private List<OrderItem> orderItemItems;
 
     public Product() {
     }
@@ -54,12 +54,12 @@ public class Product {
         this.cost = cost;
     }
 
-    public List<Order> getOrders() {
-        return orderItems;
+    public List<OrderItem> getOrders() {
+        return orderItemItems;
     }
 
-    public void setOrders(List<Order> orderItems) {
-        this.orderItems = orderItems;
+    public void setOrders(List<OrderItem> orderItemItems) {
+        this.orderItemItems = orderItemItems;
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Product {
                 "id=" + id +
                 ", title='" + title + '\'' +
                 ", cost=" + cost +
-                ", orderItems=" + orderItems +
+                ", orderItems=" + orderItemItems +
                 '}';
     }
 }

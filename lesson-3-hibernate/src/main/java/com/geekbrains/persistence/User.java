@@ -17,17 +17,21 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<Order> orderItems;
+    @Column(name = "email")
+    private String email;
 
-    public User(){
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
+    private List<OrderItem> orderItemItems;
+
+    public User() {
     }
 
-    public User(Integer id, String login, String password, List<Order> orderItems) {
+    public User(Integer id, String login, String password, String email, List<OrderItem> orderItemItems) {
         this.id = id;
         this.login = login;
         this.password = password;
-        this.orderItems = orderItems;
+        this.email = email;
+        this.orderItemItems = orderItemItems;
     }
 
     public Integer getId() {
@@ -54,12 +58,20 @@ public class User {
         this.password = password;
     }
 
-    public List<Order> getOrders() {
-        return orderItems;
+    public String getEmail() {
+        return email;
     }
 
-    public void setOrders(List<Order> orderItems) {
-        this.orderItems = orderItems;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<OrderItem> getOrderItems() {
+        return orderItemItems;
+    }
+
+    public void setOrderItems(List<OrderItem> orderItemItems) {
+        this.orderItemItems = orderItemItems;
     }
 
     @Override
@@ -68,7 +80,8 @@ public class User {
                 "id=" + id +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", orderItems=" + orderItems +
+                ", email='" + email + '\'' +
+                ", orderItems=" + orderItemItems +
                 '}';
     }
 }

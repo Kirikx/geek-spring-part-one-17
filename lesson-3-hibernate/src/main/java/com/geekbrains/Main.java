@@ -1,15 +1,20 @@
 package com.geekbrains;
 
-import com.geekbrains.persistence.Order;
+import com.geekbrains.persistence.OrderItem;
 import com.geekbrains.persistence.Product;
 import com.geekbrains.persistence.User;
 import org.hibernate.cfg.Configuration;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Predicate;
+import javax.persistence.criteria.Root;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -64,16 +69,16 @@ public class Main {
                         break;
                     case "order.find":
                         System.out.println("order.find(" + cmds[1] + ")");
-                        System.out.println(em.find(Order.class, Integer.valueOf(cmds[1])));
+                        System.out.println(em.find(OrderItem.class, Integer.valueOf(cmds[1])));
                         break;
                     case "order.findAll":
                         System.out.println("order.findAll()");
-                        System.out.println(em.createQuery("from Order", Order.class).getResultList());
+                        System.out.println(em.createQuery("from OrderItem", OrderItem.class).getResultList());
                         break;
                     case "order.delete":
                         System.out.println("product.delete(" + cmds[1] + ")");
                         em.getTransaction().begin();
-                        em.remove(em.find(Order.class, Integer.valueOf(cmds[1])));
+                        em.remove(em.find(OrderItem.class, Integer.valueOf(cmds[1])));
                         em.getTransaction().commit();
                         break;
                     case "help":
@@ -130,15 +135,38 @@ public class Main {
         System.out.println(" ");
         //################### Order #############################
         System.out.println("ORDER_1");
-        Order order = em.find(Order.class, 1);
-        System.out.println(order);
+        OrderItem orderItem = em.find(OrderItem.class, 1);
+        System.out.println(orderItem);
 
         System.out.println("ORDERS");
-        List<Order> orderItems = em.createQuery("from Order", Order.class).getResultList();
-        System.out.println(orderItems);
+        List<OrderItem> orderItemItems = em.createQuery("from OrderItem", OrderItem.class).getResultList();
+        System.out.println(orderItemItems);
 
         em.getTransaction().commit();
 
-        System.out.println(" ");
+        System.out.println();
+        System.out.println("TEST CRITERIA API");
+
+        em.createQuery("select u from User u " +
+                "where u.login like '%a%' and " +
+                "      u.email is null");
+
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<User> query = cb.createQuery(User.class);
+        Root<User> from = query.from(User.class);
+
+        List<Predicate> predicates = new ArrayList<>();
+        predicates.add(cb.like(from.get("login"), "%a%"));
+        predicates.add(cb.isNull(from.get("email")));
+
+        CriteriaQuery<User> cq = query
+                .select(from)
+                .where(predicates.toArray(new Predicate[0]));
+
+        List<User> resultList = em.createQuery(cq).getResultList();
+
+        System.out.println(resultList);
+
+        System.out.println();
     }
 }

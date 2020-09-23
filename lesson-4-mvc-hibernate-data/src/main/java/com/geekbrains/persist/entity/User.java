@@ -25,7 +25,7 @@ public class User {
     private String password;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
-    private List<OrderItem> orderItems;
+    private List<Order> orders;
 
     @Transient
     private String matchingPassword;
@@ -33,11 +33,13 @@ public class User {
     public User(){
     }
 
-    public User(Integer id, String login, String password, List<OrderItem> orderItems) {
+    public User(Integer id, @NotBlank String login, @Email String email, String password, List<Order> orders, String matchingPassword) {
         this.id = id;
         this.login = login;
+        this.email = email;
         this.password = password;
-        this.orderItems = orderItems;
+        this.orders = orders;
+        this.matchingPassword = matchingPassword;
     }
 
     public Integer getId() {
@@ -64,12 +66,12 @@ public class User {
         this.password = password;
     }
 
-    public List<OrderItem> getOrders() {
-        return orderItems;
+    public List<Order> getOrders() {
+        return orders;
     }
 
-    public void setOrders(List<OrderItem> orderItems) {
-        this.orderItems = orderItems;
+    public void setOrders(List<Order> orders) {
+        this.orders = orders;
     }
 
     public String getEmail() {
@@ -95,7 +97,7 @@ public class User {
                 ", login='" + login + '\'' +
                 ", email='" + email + '\'' +
                 ", password='" + password + '\'' +
-                ", orderItems=" + orderItems +
+                ", orders=" + orders +
                 ", matchingPassword='" + matchingPassword + '\'' +
                 '}';
     }
