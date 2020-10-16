@@ -1,0 +1,33 @@
+GET http://localhost:8080/mvc-app/api/v1/user/all
+
+###
+
+GET http://localhost:8080/mvc-app/api/v1/user/17/id
+
+###
+
+POST http://localhost:8080/mvc-app/api/v1/user
+Content-Type: application/json
+
+{
+  "id": 17,
+  "login": "ivan777",
+  "email": null,
+  "password": "ivan777"
+}
+
+###
+
+PUT http://localhost:8080/mvc-app/api/v1/user
+Content-Type: application/json
+
+{
+  "id": 17,
+  "login": "ivan44",
+  "email": null,
+  "password": "ivan44"
+}
+
+###
+
+DELETE http://localhost:8080/mvc-app/api/v1/user/11/id

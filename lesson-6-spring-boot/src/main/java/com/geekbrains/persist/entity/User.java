@@ -14,7 +14,7 @@ public class User {
     private Integer id;
 
     @NotBlank
-    @Column(name = "login", length = 128)
+    @Column(name = "login", length = 128, unique = true)
     private String login;
 
     @Email
