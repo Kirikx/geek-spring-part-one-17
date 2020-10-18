@@ -49,6 +49,7 @@
         <div class="col-12">
             <form th:action="@{/user/update}" method="post" th:object="${user}">
                 <input th:type="hidden" th:field="*{id}">
+                <p></p>
                 <div class="form-group">
                     <label>Login</label>
                     <input type="text" class="form-control" th:field="*{login}" placeholder="Enter login">
@@ -72,6 +73,15 @@
                            th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}">Validation
                         error</small>
 
+                </div>
+                <div th:each="role:${roles}">
+                    <label><input th:type="checkbox"
+                                  th:name="${role.roleName}"
+                                  th:value="${role.roleName}"
+                                  th:text="${role.roleName}"
+
+                                  th:checked="${#lists.contains(user.roles, role)}">
+                    </label>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

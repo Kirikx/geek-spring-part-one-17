@@ -3,7 +3,9 @@ package com.geekbrains.persist.entity;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -21,8 +23,17 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password")
-    private String password;
+    @Column(name = "password", length = 36)
+    private String password; //TODO char[]
+
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinTable(name = "user_with_roles",
+            joinColumns = {@JoinColumn(name = "user_id", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id")})
+    private Set<Role> roles = new HashSet<>();
+
+    @Column(name = "is_enable")
+    private Boolean isEnable;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)
     private List<Order> orders;
@@ -90,6 +101,22 @@ public class User {
         this.matchingPassword = matchingPassword;
     }
 
+    public Set<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+    public boolean isEnable() {
+        return isEnable;
+    }
+
+    public void setEnable(Boolean enable) {
+        isEnable = enable;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -99,6 +126,8 @@ public class User {
                 ", password='" + password + '\'' +
                 ", orders=" + orders +
                 ", matchingPassword='" + matchingPassword + '\'' +
+                ", roles='" + roles + '\'' +
+                ", isEnable='" + isEnable + '\'' +
                 '}';
     }
 }
