@@ -23,7 +23,7 @@ public class User {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "password", length = 36)
+    @Column(name = "password", length = 64)
     private String password; //TODO char[]
 
     @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

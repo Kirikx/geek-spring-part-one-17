@@ -30,16 +30,6 @@ public class UserAuthService implements UserDetailsService {
         return userRepository.findByLogin(login);
     }
 
-//    @Override
-//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-//        return findByLogin(username)
-//                .map(user -> new org.springframework.security.core.userdetails.User(
-//                        user.getLogin(),
-//                        user.getPassword(),
-//                        Collections.singletonList(new SimpleGrantedAuthority("ROLE_ADMIN")))) //TODO user.setRoles
-//                .orElseThrow(()-> new UsernameNotFoundException(String.format("User %s not found", username)));
-//    }
-
     @Override
     @Transactional
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

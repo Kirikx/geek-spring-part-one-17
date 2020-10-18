@@ -72,16 +72,19 @@
                     <small id="passwordError" class="form-text text-error"
                            th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}">Validation
                         error</small>
-
                 </div>
-                <div th:each="role:${roles}">
-                    <label><input th:type="checkbox"
-                                  th:name="${role.roleName}"
-                                  th:value="${role.roleName}"
-                                  th:text="${role.roleName}"
-
-                                  th:checked="${#lists.contains(user.roles, role)}">
-                    </label>
+                <div class="mb-3">
+                    <label>Roles</label>
+                    <div class="form-check ml-3" th:each="role:${roles}">
+                        <label class="form-check-label">
+                            <input class="form-check-input"
+                                   th:type="checkbox"
+                                   th:name="${role.roleName}"
+                                   th:value="${role.roleName}"
+                                   th:text="${role.roleName}"
+                                   th:checked="${#lists.contains(user.roles, role)}">
+                        </label>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>

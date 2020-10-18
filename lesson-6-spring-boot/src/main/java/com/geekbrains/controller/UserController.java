@@ -92,6 +92,7 @@ public class UserController {
         logger.info("Create user");
         User user = new User();
         model.addAttribute("user", user);
+        model.addAttribute("roles", roleRepository.findAll());
         return "user";
     }
 
@@ -112,7 +113,7 @@ public class UserController {
             return "user";
         }
         if (!user.getPassword().equals(user.getMatchingPassword())) {
-            bindingResult.rejectValue("matchingPassword", "passworn.no.match", "Введенные пароли не совпадают");
+            bindingResult.rejectValue("matchingPassword", "password.no.match", "Введенные пароли не совпадают");
             return "user";
         }
 
@@ -120,7 +121,6 @@ public class UserController {
                 .map(Role::getRoleName)
                 .collect(Collectors.toSet());
 
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!" + user.getRoles());
         user.getRoles().clear();
 
         for (String key : form.keySet()) {
@@ -148,7 +148,7 @@ public class UserController {
             User user = new User();
             user.setLogin("Kirill" + i);
             user.setEmail("kirix" + i + "@mail.ru");
-            user.setPassword("123" + i);
+            user.setPassword(passwordEncoder.encode("123" + i));
             userRepository.save(user);
         }
     }

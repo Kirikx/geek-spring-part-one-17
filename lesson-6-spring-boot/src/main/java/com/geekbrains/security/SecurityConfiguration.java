@@ -41,16 +41,22 @@ public class SecurityConfiguration {
     @Order(2)
     public static class UiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
+
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
-//                    .csrf().disable()
                     .authorizeRequests()
                     .antMatchers("/").permitAll()
                     .antMatchers("/user/**").hasRole("ADMIN")
+                    .antMatchers("/product/**").hasAnyRole("ADMIN", "MANAGER")
+                    .antMatchers("/login*").anonymous()
+                    .anyRequest().authenticated()
                     .and()
                     .formLogin()
-                    .loginPage("/login");
+                    .loginPage("/login")
+/*                      .failureUrl("/login.html?error=true")
+                    .and()
+                    .exceptionHandling().accessDeniedPage("/login.html")*/;
         }
     }
 
