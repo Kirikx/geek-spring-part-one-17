@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
@@ -41,12 +42,14 @@ public class SecurityConfiguration {
     @Order(2)
     public static class UiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
 
+        @Autowired
+        private AccessDeniedHandler accessDeniedHandler;
 
         @Override
         protected void configure(HttpSecurity http) throws Exception {
             http
                     .authorizeRequests()
-                    .antMatchers("/").permitAll()
+                    .antMatchers("/", "/asses_denied").permitAll()
                     .antMatchers("/user/**").hasRole("ADMIN")
                     .antMatchers("/product/**").hasAnyRole("ADMIN", "MANAGER")
                     .antMatchers("/login*").anonymous()
@@ -54,9 +57,8 @@ public class SecurityConfiguration {
                     .and()
                     .formLogin()
                     .loginPage("/login")
-/*                      .failureUrl("/login.html?error=true")
                     .and()
-                    .exceptionHandling().accessDeniedPage("/login.html")*/;
+                    .exceptionHandling().accessDeniedHandler(accessDeniedHandler);
         }
     }
 

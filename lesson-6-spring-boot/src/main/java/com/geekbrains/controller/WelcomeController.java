@@ -27,6 +27,12 @@ public class WelcomeController {
         return "login";
     }
 
+    @GetMapping("/403")
+    public String assesDeny() {
+        return "acces_denied";
+    }
+
+
     private void addToRoles() {
         Role roleUser = new Role();
         roleUser.setRoleName("ROLE_USER");
