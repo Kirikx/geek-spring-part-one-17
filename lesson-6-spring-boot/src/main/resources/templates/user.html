@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <!-- Required meta tags -->
@@ -16,7 +17,7 @@
 <body>
 
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a class="navbar-brand" href="#">FruZbuka</a>
+    <a class="navbar-brand" href="/mvc-app/">FruZbuka</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
             aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -42,6 +43,20 @@
             </li>
         </ul>
     </div>
+    <form sec:authorize="isAuthenticated()" class="form-inline my-2 my-lg-0"
+          th:action="@{/logout}"
+          method="post">
+        <button class="btn btn-outline-success my-2 my-sm-0">
+            Logout <span sec:authentication="principal.username"></span>
+        </button>
+    </form>
+    <form sec:authorize="!isAuthenticated()" class="form-inline my-2 my-lg-0"
+          th:action="@{/login}"
+          method="get">
+        <button class="btn btn-outline-success my-2 my-sm-0">
+            Login
+        </button>
+    </form>
 </nav>
 
 <div class="container">
@@ -49,6 +64,7 @@
         <div class="col-12">
             <form th:action="@{/user/update}" method="post" th:object="${user}">
                 <input th:type="hidden" th:field="*{id}">
+                <button class="btn btn-outline-primary" onclick="goBack()">Go Back</button>
                 <div class="form-group">
                     <label>Login</label>
                     <input type="text" class="form-control" th:field="*{login}" placeholder="Enter login">
@@ -71,7 +87,19 @@
                     <small id="passwordError" class="form-text text-error"
                            th:if="${#fields.hasErrors('matchingPassword')}" th:errors="*{matchingPassword}">Validation
                         error</small>
-
+                </div>
+                <div class="mb-3">
+                    <label>Roles</label>
+                    <div class="form-check ml-3" th:each="role:${roles}">
+                        <label class="form-check-label">
+                            <input class="form-check-input"
+                                   th:type="checkbox"
+                                   th:name="${role.roleName}"
+                                   th:value="${role.roleName}"
+                                   th:text="${role.roleName}"
+                                   th:checked="${#lists.contains(user.roles, role)}">
+                        </label>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
@@ -90,5 +118,10 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
+<script>
+    function goBack() {
+        window.history.back()
+    }
+</script>
 
 </body>
