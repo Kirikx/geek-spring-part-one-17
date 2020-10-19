@@ -1,4 +1,7 @@
 # geek-spring-part-one-17
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/49533cd8756c4b8695c40bf535a2fea9)](https://app.codacy.com/gh/Kirikx/geek-spring-part-one-17?utm_source=github.com&utm_medium=referral&utm_content=Kirikx/geek-spring-part-one-17&utm_campaign=Badge_Grade)
+
 # Tasks
 App context: host:port/mvc-app/
 Lesson 1
