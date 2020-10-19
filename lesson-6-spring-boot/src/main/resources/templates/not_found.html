@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
     <!-- Required meta tags -->
@@ -42,12 +43,27 @@
             </li>
         </ul>
     </div>
+    <form sec:authorize="isAuthenticated()" class="form-inline my-2 my-lg-0"
+          th:action="@{/logout}"
+          method="post">
+        <button class="btn btn-outline-success my-2 my-sm-0">
+            Logout <span sec:authentication="principal.username"></span>
+        </button>
+    </form>
+    <form sec:authorize="!isAuthenticated()" class="form-inline my-2 my-lg-0"
+          th:action="@{/login}"
+          method="get">
+        <button class="btn btn-outline-success my-2 my-sm-0">
+            Login
+        </button>
+    </form>
 </nav>
 
 <div class="container">
     <div class="row py-2">
-        <h2><span th:text="${entityName}">ENTITY NAME</span> not found</h2>
-
+        <div class="starter-template">
+            <h1><span th:text="${entityName}">ENTITY NAME</span> not found</h1>
+        </div>
     </div>
 </div>
 
