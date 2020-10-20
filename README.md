@@ -86,16 +86,16 @@ Create user role "ROLE_MANAGER" (use in memory user mem_user)
 If you edit product if not exist, to be view "not fount page"
 ![Alt text](md_content/not_found_form_1.png?raw=true "not_found")
 
-#### 403 page (ROLE_ADMIN, ROLE_MANAGER)
+#### 403 page
 If you not credential user, redirect 403 page
 ![Alt text](md_content/403_form.png?raw=true "403_page")
 
 ### Reference
 For further reference:
 
-* [HOME](http://localhost:8080/mvc-app/)
-* [USERS](http://localhost:8080/mvc-app/user)
-* [PRODUCTS](http://localhost:8080/mvc-app/product)
+ * [HOME](http://localhost:8080/mvc-app/)
+ * [USERS](http://localhost:8080/mvc-app/user)
+ * [PRODUCTS](http://localhost:8080/mvc-app/product)
 
 
 

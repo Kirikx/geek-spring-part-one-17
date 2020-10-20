@@ -10,9 +10,12 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.access.AccessDeniedHandler;
+
+import javax.servlet.http.HttpServletResponse;
 
 @EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
@@ -62,26 +65,27 @@ public class SecurityConfiguration {
         }
     }
 
-//    @Configuration
-//    @Order(1)
-//    public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
-//        @Override
-//        protected void configure(HttpSecurity http) throws Exception {
-//            http
-//                    .authorizeRequests()
-//                    .antMatchers("/api/**").hasRole("ADMIN")
-//                    .and()
-//                    .httpBasic()
-//                    .authenticationEntryPoint((req, resp, exception) -> {
-//                        resp.setContentType("application/json");
-//                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//                        resp.setCharacterEncoding("UTF-8");
-//                        resp.getWriter().println("{ \"error\": \"" + exception.getMessage() + "\" }");
-//                    })
-//                    .and()
-//                    .csrf().disable()
-//                    .sessionManagement()
-//                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-//        }
-//    }
+    @Configuration
+    @Order(1)
+    public static class ApiWebSecurityConfigurationAdapter extends WebSecurityConfigurerAdapter {
+        @Override
+        protected void configure(HttpSecurity http) throws Exception {
+            http
+                    .antMatcher("/api/**")//todo test
+                    .authorizeRequests()
+                    .antMatchers("/api/**").hasRole("ADMIN")
+                    .and()
+                    .httpBasic()
+                    .authenticationEntryPoint((req, resp, exception) -> {
+                        resp.setContentType("application/json");
+                        resp.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                        resp.setCharacterEncoding("UTF-8");
+                        resp.getWriter().println("{ \"error\": \"" + exception.getMessage() + "\" }");
+                    })
+                    .and()
+                    .csrf().disable()
+                    .sessionManagement()
+                    .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        }
+    }
 }
