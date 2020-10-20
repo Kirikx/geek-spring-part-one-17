@@ -44,7 +44,6 @@
             </li>
         </ul>
     </div>
-
     <form sec:authorize="isAuthenticated()" class="form-inline my-2 my-lg-0"
           th:action="@{/logout}"
           method="post">
@@ -55,11 +54,10 @@
     <form sec:authorize="!isAuthenticated()" class="form-inline my-2 my-lg-0"
           th:action="@{/login}"
           method="get">
-        <button class="btn btn-outline-success my-2 my-sm-0">
+        <button class="btn btn-outline-primary my-2 my-sm-0">
             Login
         </button>
     </form>
-
 </nav>
 
 <div class="container">
